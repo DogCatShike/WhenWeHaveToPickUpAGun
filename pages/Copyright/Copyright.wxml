@@ -1,0 +1,22 @@
+<view class="container">
+    <view class="header">
+        <view class="title">版权信息</view>
+        <view class="btn" bindtap="OnCopyrightCloseClick">x</view>
+    </view>
+
+    <view class="content">
+        <view class="copyright-content">程序: 230224125辛怡然</view>
+        <view class="copyright-content">美术: LibLibAI(https://www.liblib.art) + 爱给网(https://www.aigei.com)</view>
+        <view class="copyright-content">音乐: Deepseek + 230224125辛怡然</view>
+    </view>
+
+    <map class="map"
+         longitude="118.074397" 
+         latitude="24.615400"
+         scale="17"
+         markers="{{markers}}"
+         show-location="true">
+    </map>
+
+    <text class="footer">我大概就在这块, 左右浮动不到两千公里吧</text>
+</view>

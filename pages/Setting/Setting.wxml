@@ -1,0 +1,31 @@
+<view class="container">
+    <view class="nav-bar">
+        <view class="back-btn" bindtap="navigateBack">‹</view>
+        <view class="title">系统设置</view>
+    </view>
+
+    <view class="settings-content">
+
+        <view class="setting-item">
+            <text class="label">游戏音量</text>
+            <slider value="{{volume}}" min="0" max="100" activeColor="#4a90e2" block-size="20" bindchange="onVolumeChange" />
+            <text class="value">{{volume}}%</text>
+        </view>
+
+        <view class="setting-item">
+            <text class="label">账户状态</text>
+            <view class="login-box">
+                <block wx:if="{{isLoggedIn}}">
+                    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+                    <text class="nickname">{{userInfo.nickName}}</text>
+                    <button class="logout-btn" bindtap="logout">退出登录</button>
+                </block>
+                
+                <block wx:else>
+                    <button class="login-btn" bindtap="login" open-type="getUserInfo">微信登录</button>
+                </block>
+            </view>
+        </view>
+
+    </view>
+</view>

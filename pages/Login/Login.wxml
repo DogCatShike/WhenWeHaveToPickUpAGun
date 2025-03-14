@@ -1,0 +1,14 @@
+<view class="container">
+    <image class="bg" src="/img/bg.png" mode="aspectFill"></image>
+
+    <view class="title">当我们不得不拿起枪</view>
+
+    <view class="btn_login_all">
+        <button class="btn_login" bindtap="OnLoginPlayClick">开始游戏</button>
+        <button class="btn_login" bindtap="OnLoginSettingClick">设置</button>
+    </view>
+
+    <view class="footer" bindtap="OnLoginFooterClick">
+        <text>版权信息</text>
+    </view>
+</view>
