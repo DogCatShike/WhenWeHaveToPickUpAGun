@@ -20,7 +20,6 @@
 .btn {
     position: absolute;
     right: 300rpx;
-    /* transform: translateY(-50%); */
     font-size: 50rpx;
     color: #666;
     width: 100rpx;

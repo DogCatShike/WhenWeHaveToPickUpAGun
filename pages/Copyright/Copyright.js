@@ -13,8 +13,6 @@ Page({
     },
 
     OnCopyrightCloseClick() {
-        wx.redirectTo({
-            url: '/pages/Login/Login'
-        })
+        wx.navigateBack();
     }
 })

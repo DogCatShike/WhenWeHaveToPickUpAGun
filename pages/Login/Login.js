@@ -1,4 +1,4 @@
-let bgm = null;
+const app = getApp();
 
 Page({
 
@@ -7,12 +7,14 @@ Page({
     },
 
     onLoad() {
+        let bgm = app.globalData.bgm;
+        // 这个if怎么想出来的, 忘了, 我的脑子和昨晚的脑子是割裂的. 放c里绝对有bug, 但这里就莫名其妙可以用
         if (!bgm) {
             console.log("播放背景音乐")
-            bgm = wx.createInnerAudioContext();
-            bgm.src = "/audio/WhenMustGun.wav";
-            bgm.loop = true;
-            bgm.play();
+            app.globalData.bgm = wx.createInnerAudioContext();
+            app.globalData.bgm.src = "/audio/WhenMustGun.wav";
+            app.globalData.bgm.loop = true;
+            app.globalData.bgm.play();
         }
     },
 
@@ -24,7 +26,7 @@ Page({
     },
 
     OnLoginPlayClick() {
-        wx.navigateTo({
+        wx.navigateTo({ // 入栈
             url: '/pages/Game/Game'
         })
     },
