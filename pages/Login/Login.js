@@ -57,4 +57,14 @@ Page({
             url: '/pages/Copyright/Copyright'
         })
     },
+
+    OnLoginClearClick() {
+        wx.clearStorageSync();
+        
+        wx.showToast({
+            title: '数据已清除',
+            icon: 'success',
+            duration: 2000
+        });
+    }
 })

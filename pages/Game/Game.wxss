@@ -26,7 +26,7 @@
 
 .txt_plot {
     position: absolute;
-    top: 20%;
+    top: 25%;
     left: 5%;
     right: 5%;
     background: rgba(0, 0, 0, 0.8);
@@ -46,12 +46,12 @@
     right: 10%;
     width: 80%;
     height: 100rpx;
-    line-height: 100rpx;
-    background: linear-gradient(135deg, #4a90e2, #5aa5f8);
+    line-height: 70rpx;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
     font-size: 36rpx;
     border-radius: 50rpx;
-    box-shadow: 0 8rpx 24rpx rgba(74, 144, 226, 0.3);
+    box-shadow: 0 4px 8px rgba(64, 0, 0, 0.3);
 }
 
 .control {
@@ -174,4 +174,67 @@
     font-weight: bold;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+}
+
+.subpage-population {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60rpx;
+}
+
+.population {
+    flex: 1;
+    text-align: center;
+}
+
+.txt-population {
+    display: block;
+    font-size: 32rpx;
+    color: #666;
+    margin-bottom: 16rpx;
+    margin-top: 100rpx;
+}
+
+.num-population {
+    font-size: 48rpx;
+    font-weight: bold;
+    color: #333;
+}
+
+.slider-population {
+    padding: 0 40rpx;
+}
+
+.spit_out {
+    display: block;
+    font-size: 24rpx;
+    color: #bbbbbb;
+    margin-top: 30rpx;
+}
+
+.subpage-policy {
+    padding: 20rpx;
+}
+
+.policy {
+    display: flex;
+    align-items: center;
+}
+
+.txt-policy {
+    margin-right: 10rpx;
+    font-size: 30rpx;
+    color: white;
+}
+
+.whether-policy {
+    width: 40rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30rpx;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 2rpx;
 }

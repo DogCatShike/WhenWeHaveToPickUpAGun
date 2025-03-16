@@ -59,3 +59,26 @@
 .footer:hover {
     color: rgb(130, 120, 0);
 }
+
+.btn_clear{
+    position: fixed;
+    top: 250rpx;
+    right: 20rpx;
+    /* important: 强调样式 */
+    width: 100rpx!important;
+    height: 100rpx!important;
+    background-color: #41484a;
+    color: #eeddbb;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 27rpx;
+    writing-mode: vertical-lr;
+}
+
+.btn_clear:hover {
+    background-color: #25241c;
+    box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.3);
+}

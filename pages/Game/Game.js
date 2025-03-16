@@ -3,16 +3,19 @@ const app = getApp()
 Page({
     data: {
         isPlot: true, // 剧情
+        isNoAdult: false, // 无成人
+        isNoFood: false, // 无食物
         plotList: [
-            "第一段剧情...",
-            "第二段剧情...",
-            "第三段剧情..."
+            "战争突然爆发，战火侵袭了你所在的村庄。作为村里留下的唯一的年青人，你必须带领人民，活下去，直到最后一刻。（好累，不想往下做，写了一点点接口，游戏主要逻辑是有了，差一个功能。但一边做一边蹦想法，感觉把现在构思的做完，我会在做完之前加一百个没那么重要的功能。以上是我的全部狡辩。)",
+            "夜间，不知道从哪儿来了一伙强盗。大概是发国难财，他们看起来很强壮，还带着武器。你们必须做出反抗。",
+            "不想编剧情了"
         ],
         plotIndex: 0,
 
         adult: 100, // 成人
         child: 30, // 儿童
         player: 1, // 玩家
+        people: 100, // 总人口
 
         // 成人子类目
         soldier: 0, // 士兵
@@ -24,6 +27,9 @@ Page({
         day: 1, // 天数
 
         showSubPage: -1, // 1: 政策, 2: 人口, 3: 贸易
+
+        // 政策
+        isChildWork: false, // 童工
     },
 
     onLoad() { // Awake
@@ -91,6 +97,27 @@ Page({
             isPlot: false,
             plotIndex: this.data.plotIndex + 1,
         });
+
+        const adult = this.data.adult;
+        const food = this.data.food;
+        if (adult <= 0) {
+            this.setData({
+                isNoAdult: true,
+            });
+        }
+
+        if (food <= 0) {
+            this.setData({
+                isNoFood: true,
+            });
+        }
+
+        const day = this.data.day;
+        {
+            if (day >= 3) {
+                this.NoNew();
+            }
+        }
     },
 
     OnGamePolicyClick() {
@@ -111,18 +138,80 @@ Page({
         })
     },
 
+    OnPolicyChildWorkClick() {
+        const isChildWork = this.data.isChildWork;
+        this.setData({
+            isChildWork: !isChildWork
+        })
+
+        const child = this.data.child;
+        const adult = this.data.adult;
+        const farmer = this.data.farmer;
+        const soldier = this.data.soldier;
+
+        if (!isChildWork) // 实际上是允许童工
+        {
+            if (farmer + soldier == adult) {
+                this.setData({
+                    people: adult + child,
+                    farmer: farmer + child,
+                });
+            }
+        }
+        else {
+            if (farmer + soldier == adult + child) {
+                this.setData({
+                    people: adult,
+                    farmer: farmer - child,
+                });
+            }
+        }
+    },
+
     OnSubpageCloseClick() {
         this.setData({
             showSubPage: -1
         })
     },
 
-    onSubpageSureClick() {
-        console.log("onSubpageSureClick");
+    OnSubpageSliderChange(e) {
+        const people = this.data.people;
+        const farmer = e.detail.value;
+        const soldier = people - farmer;
+
+        this.setData({
+            farmer: farmer,
+            soldier: soldier,
+        });
+    },
+
+    OnTradeSureClick() {
+        console.log('OnGameTradeClick');
+        this.setData({
+            showSubPage: -1
+        })
     },
 
     OnGameNextClick() {
-        console.log("OnGameNextClick");
+        const day = this.data.day;
+        const adult = this.data.adult;
+        const child = this.data.child;
+        const farmer = this.data.farmer;
+        const food = this.data.food;
+        this.setData({
+            isPlot: true,
+            day: day + 1,
+
+            food: food - adult - child * 0.5 + farmer,
+        })
+
+        const gun = this.data.gun;
+        if (day == 1) {
+            this.Dead(30);
+            this.setData({
+                gun: gun + 1,
+            })
+        }
     },
 
     OnGameBackClick() {
@@ -152,4 +241,100 @@ Page({
             }
         })
     },
+
+    OnNoAdultClick() {
+        const soldier = this.data.soldier;
+        this.setData({
+            showSubPage: -1,
+            player: 0,
+            adult: 1,
+            soldier: soldier + 1,
+        })
+
+        this.NoNew();
+    },
+
+    OnNoFoodClick() {
+        this.setData({
+            showSubPage: -1,
+            player: 0,
+            adult: 1,
+            child: 0,
+            farmer: 0,
+            soldier: 1,
+        })
+
+        this.NoNew();
+    },
+
+    Dead: function (number) {
+        const people = this.data.people;
+        const adult = this.data.adult;
+        const child = this.data.child;
+        const soldier = this.data.soldier;
+        const farmer = this.data.farmer;
+
+        this.setData({
+            people: people - number,
+        });
+
+        if (number <= soldier) {
+            this.setData({
+                soldier: soldier - number,
+                adult: adult - number,
+            });
+        }
+        else if (number > soldier && number <= adult) {
+            this.setData({
+                soldier: 0,
+                farmer: farmer - (number - soldier) * 2,
+                adult: adult - soldier - (number - soldier) * 2,
+            });
+        }
+        else if (number > adult && number <= people) {
+            this.setData({
+                soldier: 0,
+                farmer: farmer - (number - soldier) * 2 - (number - adult) * 3,
+                adult: 0,
+                child: child - (number - adult) * 3,
+            });
+        }
+        else if (number > people) {
+            this.setData({
+                soldier: 0,
+                farmer: 0,
+                adult: 0,
+                child: 0,
+                people: 0,
+            });
+        }
+    },
+
+    NoNew: function () {
+        wx.showModal({
+            title: '',
+            content: '之后没有新内容了, 你可以继续游玩, 可能有剧情, 但是没有造成变量非规律变化的事件了',
+            confirmText: '退出游戏',
+            cancelText: '继续游戏',
+            showCancel: true,
+            success: (res) => {
+                if (res.confirm) {
+                    wx.setStorageSync('isPlot', this.data.isPlot);
+                    wx.setStorageSync('plotIndex', this.data.plotIndex);
+                    wx.setStorageSync('adult', this.data.adult);
+                    wx.setStorageSync('child', this.data.child);
+                    wx.setStorageSync('player', this.data.player);
+                    wx.setStorageSync('soldier', this.data.soldier);
+                    wx.setStorageSync('farmer', this.data.farmer);
+                    wx.setStorageSync('food', this.data.food);
+                    wx.setStorageSync('gun', this.data.gun);
+                    wx.setStorageSync('day', this.data.day);
+
+                    wx.reLaunch({
+                        url: '/pages/Login/Login'
+                    });
+                }
+            }
+        })
+    }
 })

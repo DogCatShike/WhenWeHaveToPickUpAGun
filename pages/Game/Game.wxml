@@ -4,7 +4,7 @@
     <!-- 剧情 -->
     <view wx:if="{{isPlot && plotIndex<plotList.length}}" class="game">
         <view class="txt_plot">{{plotList[plotIndex]}}</view>
-        <button class="btn_Continue" bindtap="OnGameContinueClick">继续</button>
+        <button class="btn_continue" bindtap="OnGameContinueClick">继续</button>
 
         <!-- 按理说该放外面的, 但是subpage的遮罩层次有bug, 移到里面快点 -->
         <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
@@ -21,22 +21,45 @@
         <view class="subpage">
             <subpage show="{{showSubPage==1}}" title="政策" bind:close="OnSubpageCloseClick">
                 <view class="subpage">
-                    <text>政策</text>
-                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                    <button bindtap="OnSubpageCloseClick" class="btn_subpage">确认</button>
+
+                    <view class="subpage-policy">
+                        <view class="policy">
+                            <text class="txt-policy">允许童工</text>
+                            <text class="whether-policy" wx:if="{{isChildWork}}" bindtap="OnPolicyChildWorkClick">√</text>
+                            <text class="whether-policy" wx:else bindtap="OnPolicyChildWorkClick">x</text>
+                        </view>
+
+                        <text class="spit_out">这里曾记录了一个bug, 改了, 但这个页面好空, 所以说点废话占位</text>
+                    </view>
                 </view>
             </subpage>
 
             <subpage show="{{showSubPage==2}}" title="人口" bind:close="OnSubpageCloseClick">
                 <view class="subpage">
-                    <text>人口</text>
-                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                    <button bindtap="OnSubpageCloseClick" class="btn_subpage">确认</button>
+
+                    <view class="subpage-population">
+                        <view class="population">
+                            <text class="txt-population">农民</text>
+                            <text class="num-population">{{farmer}}</text>
+                        </view>
+                        <view class="population">
+                            <text class="txt-population">士兵</text>
+                            <text class="num-population">{{soldier}}</text>
+                        </view>
+                    </view>
+
+                    <view class="slider-population">
+                        <slider min="0" max="{{people}}" value="{{farmer}}" bindchange="OnSubpageSliderChange"/>
+                    </view>
                 </view>
             </subpage>
 
             <subpage show="{{showSubPage==3}}" title="交易" bind:close="OnSubpageCloseClick">
                 <view class="subpage">
-                    <text>交易</text>
-                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                    <text class="spit_out">懒得做了, 大概思路就是每天生成一个1-15的随机数, 转成四位二进制, 对应四种商品(成人 儿童 食物 枪). 0不显示, 1显示, 显示的代表今日可换来的商品. 不同商品对应不同价值, 当己方价值小于等于对方价值, 可点击确认按钮确认交易.</text>
+                    <button bindtap="OnTradeSureClick" class="btn_subpage">确认</button>
                 </view>
             </subpage>
         </view>
@@ -55,5 +78,19 @@
 
         <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
         <button class="btn_next" bindtap="OnGameNextClick">下一天</button>
+
+        <subpage show="{{isNoAdult}}" title="发生了什么" bind:close="OnNoAdultClick">
+            <view class="subpage">
+                <button bindtap="OnNoAdultClick" class="btn_subpage">确认</button>
+                <text>现在这片地方已经没有成人了, 孩子们在努力变得坚强, 但你必须拿起武器, 带头冲锋</text>
+            </view>
+        </subpage>
+
+        <subpage show="{{isNoFood}}" title="发生了什么" bind:close="OnNoAdultClick">
+            <view class="subpage">
+                <button bindtap="OnNoAdultClick" class="btn_subpage">确认</button>
+                <text>粮食不足了, 按理说应该饿死一些人继续游戏, 但是懒得做了, 所以全饿趴了, 人们跑光了, 你也只能靠自己了</text>
+            </view>
+        </subpage>
     </view>
 </view>
