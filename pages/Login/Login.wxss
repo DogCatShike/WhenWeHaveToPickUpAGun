@@ -37,13 +37,14 @@
     margin: 40rpx 0;
     border-radius: 50rpx;
     font-size: 34rpx;
-    color: black;
+    background-color: #41484a;
+    color: #eeddbb;
     transition: all 0.3s;
     line-height: 70rpx;
 }
 
 .btn_login:hover {
-    background-color: #888888;
+    background-color: #25241c;
     box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.3);
 }
 

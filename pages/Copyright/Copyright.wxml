@@ -18,5 +18,5 @@
          show-location="true">
     </map>
 
-    <text class="footer">我大概就在这块, 左右浮动不到两千公里吧</text>
+    <text class="footer">我大概就在这块, 东西南北浮动不到两千公里吧</text>
 </view>

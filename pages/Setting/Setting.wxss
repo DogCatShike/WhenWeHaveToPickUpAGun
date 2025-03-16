@@ -74,10 +74,18 @@
 }
 
 .avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
+    width: 100rpx;
+    height: 100rpx;
     margin-right: 20rpx;
+    outline: #333 solid 2rpx;
+}
+
+.avatar-text {
+    font-size: 28rpx;
+    color: rgba(255, 0, 0, 0.5);
+    position: absolute;
+    bottom: 400rpx;
+    left: 50rpx;
 }
 
 .nickname {
@@ -101,4 +109,11 @@
 .btn-setting:hover {
     background-color: rgb(0, 100, 0);
     box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.3);
+}
+
+.spit-out {
+    display: block;
+    font-size: 32rpx;
+    color: #bbbbbb;
+    margin-bottom: 30rpx;
 }

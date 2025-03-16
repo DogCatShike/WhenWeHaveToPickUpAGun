@@ -13,15 +13,17 @@
         </view>
 
         <view class="setting-content">
-            <text class="setting-title">登录</text>
+            <text class="setting-title">账户</text>
+            <text class="spit-out">其实只是一个伪注册, 根本没实际作用. 微信这个获取用户信息改的太难受了, 跟着文档跳来跳去, 最后告诉我接口已弃用. 反正这个游戏设计的也不要登录, 只是懒得删这个按钮了, 做个假的吧</text>
             <view class="login">
                 <block wx:if="{{isLogin}}">
-                    <image class="avatar" src="{{user.avatar}}"></image> <!-- avater: 头像 -->
-                    <text class="name">{{user.name}}</text>
-                    <button class="btn-setting" bindtap="OnSettingQuitClick">退出登录</button>
+                    <image class="avatar" src="{{userAvatar}}" mode="aspectFit" bindtap="OnSettingAvatarClick"></image> <!-- avatar: 头像 -->
+                    <text class="avatar-text" wx:if="{{userAvatar==null}}">点击方框可以设置头像</text>
+                    <text class="name">{{userName}}</text>
+                    <button class="btn-setting" bindtap="OnSettingQuitClick">注销</button>
                 </block>
                 <block wx:else>
-                    <button class="btn-setting" bindtap="OnSettingLoginClick" open-type="getUser">微信登录</button>
+                    <button class="btn-setting" open-type="getUserInfo" bindgetuserinfo="OnSettingLoginClick" lang="zh_CN">注册</button>
                 </block>
             </view>
         </view>

@@ -1,66 +1,57 @@
-// pages/Game/Game.js
+const app = getApp()
+
 Page({
+    data: {
+        isPlot: false, // 剧情
+        
+        adult: 0, // 成人
+        child: 0, // 儿童
+        player: 1, // 玩家
+        
+        // 成人子类目
+        soldier: 0, // 士兵
+        farmer: 0, // 农民
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
+        food: 0, // 食物
+        gun: 0, // 枪
+    },
 
-  },
+    onLoad() { // Awake
+        let bgm = app.globalData.bgm;
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
+        const savedVolume = wx.getStorageSync('volume');
+        this.setData({
+            volume: savedVolume || 100
+        });
 
-  },
+        if (!bgm) {
+            app.globalData.bgm = wx.createInnerAudioContext();
+            app.globalData.bgm.src = "/audio/WhenMustGun.wav";
+            app.globalData.bgm.loop = true;
+            app.globalData.bgm.play();
+            app.globalData.bgm.volume = this.data.volume / 100;
+        }
+    },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+    onUnload() { // OnDestroy
+        let bgm = app.globalData.bgm;
 
-  },
+        if (bgm) {
+            bgm.stop();
+            bgm.destroy();
+            getApp().globalData.bgm = null;
+        }
+    },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+    onReady() { // Start
 
-  },
+    },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
+    onShow() { // OnEnable
 
-  },
+    },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
+    onHide() { // OnDisable
 
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
+    },
 })
