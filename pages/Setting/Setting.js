@@ -49,6 +49,7 @@ Page({
             title: '设置昵称',
             content: '辛怡然',
             editable: true,
+            showCancel: false,
             success: (res) => {
                 if (res.content == "辛怡然") {
                     wx.showModal({

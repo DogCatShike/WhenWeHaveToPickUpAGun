@@ -5,7 +5,8 @@
     </view>
 
     <view class="content">
-        <view class="copyright-content">程序: 230224125辛怡然</view>
+        <view class="copyright-content">策划: 230224125辛怡然</view>
+        <view class="copyright-content">程序: 230224125辛怡然 (css让ai调了一部分, 大概30%, 强迫症看他歪的不顺眼, 但调累了)</view>
         <view class="copyright-content">美术: LibLibAI(https://www.liblib.art) + 爱给网(https://www.aigei.com)</view>
         <view class="copyright-content">音乐: Deepseek + 230224125辛怡然</view>
     </view>

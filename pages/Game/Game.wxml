@@ -1,2 +1,30 @@
-<!--pages/Game/Game.wxml-->
-<text>pages/Game/Game.wxml</text>
+<view class="container">
+    <image class="bg" src="/img/gameBG.png" mode="scaleToFill" />
+
+    <!-- 剧情 -->
+    <view wx:if="{{isPlot}}" class="game">
+        <view class="txt_plot">{{plotText}}</view>
+        <button class="btn_Continue" bindtap="OnGameContinueClick">继续</button>
+    </view>
+
+    <!-- 主界面 -->
+    <view wx:else class="game">
+        <view class="control">
+            <button class="btn_control" bindtap="OnGamePolicyClick">政策</button>
+            <button class="btn_control" bindtap="OnGamePopulationClick">人口</button>
+            <button class="btn_control" bindtap="OnGameTradeClick">交易</button>
+        </view>
+
+        <view class="hud">
+            <text class="hud_content">成人: {{adult}}</text>
+            <text class="hud_content_secondary">农民: {{farmer}} + 士兵: {{soldier}}</text>
+            <text class="hud_content">儿童: {{child}}</text>
+            <text class="hud_content">你: {{player}}</text>
+            <text class="hud_content">------------</text>
+            <text class="hud_content">食物: {{food}}</text>
+            <text class="hud_content">枪: {{gun}}</text>
+        </view>
+    </view>
+
+    <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
+</view>
