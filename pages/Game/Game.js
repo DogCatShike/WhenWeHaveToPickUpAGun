@@ -2,19 +2,28 @@ const app = getApp()
 
 Page({
     data: {
-        isPlot: false, // 剧情
-        plotText: "", // 剧情文本
+        isPlot: true, // 剧情
+        plotList: [
+            "第一段剧情...",
+            "第二段剧情...",
+            "第三段剧情..."
+        ],
+        plotIndex: 0,
 
-        adult: 0, // 成人
-        child: 0, // 儿童
+        adult: 100, // 成人
+        child: 30, // 儿童
         player: 1, // 玩家
 
         // 成人子类目
         soldier: 0, // 士兵
-        farmer: 0, // 农民
+        farmer: 100, // 农民
 
-        food: 0, // 食物
+        food: 500, // 食物
         gun: 0, // 枪
+
+        day: 1, // 天数
+
+        showSubPage: -1, // 1: 政策, 2: 人口, 3: 贸易
     },
 
     onLoad() { // Awake
@@ -22,6 +31,7 @@ Page({
 
         const savedVolume = wx.getStorageSync('volume');
         const savedIsPlot = wx.getStorageSync('isPlot');
+        const savedPlotIndex = wx.getStorageSync('plotIndex');
         const savedAdult = wx.getStorageSync('adult');
         const savedChild = wx.getStorageSync('child');
         const savedPlayer = wx.getStorageSync('player');
@@ -29,17 +39,20 @@ Page({
         const savedFarmer = wx.getStorageSync('farmer');
         const savedFood = wx.getStorageSync('food');
         const savedGun = wx.getStorageSync('gun');
+        const savedDay = wx.getStorageSync('day');
 
         this.setData({
             volume: savedVolume || 100,
-            isPlot: savedIsPlot || false,
-            adult: savedAdult || 0,
-            child: savedChild || 0,
+            isPlot: savedIsPlot || true,
+            plotIndex: savedPlotIndex || 0,
+            adult: savedAdult || 100,
+            child: savedChild || 30,
             player: savedPlayer || 1,
             soldier: savedSoldier || 0,
-            farmer: savedFarmer || 0,
-            food: savedFood || 0,
+            farmer: savedFarmer || 100,
+            food: savedFood || 500,
             gun: savedGun || 0,
+            day: savedDay || 1,
         });
 
         if (!bgm) {
@@ -75,31 +88,54 @@ Page({
 
     OnGameContinueClick() {
         this.setData({
-            isPlot: flase,
+            isPlot: false,
+            plotIndex: this.data.plotIndex + 1,
         });
     },
 
     OnGamePolicyClick() {
-        console.log("OnGamePolicyClick");
+        this.setData({
+            showSubPage: 1
+        })
     },
 
     OnGamePopulationClick() {
-        console.log("OnGamePopulationClick");
+        this.setData({
+            showSubPage: 2
+        })
     },
 
     OnGameTradeClick() {
-        console.log("OnGameTradeClick");
+        this.setData({
+            showSubPage: 3
+        })
+    },
+
+    OnSubpageCloseClick() {
+        this.setData({
+            showSubPage: -1
+        })
+    },
+
+    onSubpageSureClick() {
+        console.log("onSubpageSureClick");
+    },
+
+    OnGameNextClick() {
+        console.log("OnGameNextClick");
     },
 
     OnGameBackClick() {
         wx.showModal({
-            title: null,
+            title: '',
             content: '确认返回主界面吗? 当前进度将保存',
-            editable: true,
+            confirmText: '确认退出',
+            cancelText: '继续游戏',
             showCancel: true,
             success: (res) => {
                 if (res.confirm) {
-                    wx.setStorageSync('isPlot', this.data.isPlot);  
+                    wx.setStorageSync('isPlot', this.data.isPlot);
+                    wx.setStorageSync('plotIndex', this.data.plotIndex);
                     wx.setStorageSync('adult', this.data.adult);
                     wx.setStorageSync('child', this.data.child);
                     wx.setStorageSync('player', this.data.player);
@@ -107,6 +143,7 @@ Page({
                     wx.setStorageSync('farmer', this.data.farmer);
                     wx.setStorageSync('food', this.data.food);
                     wx.setStorageSync('gun', this.data.gun);
+                    wx.setStorageSync('day', this.data.day);
 
                     wx.reLaunch({
                         url: '/pages/Login/Login'

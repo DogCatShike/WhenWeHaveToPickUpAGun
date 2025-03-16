@@ -2,17 +2,43 @@
     <image class="bg" src="/img/gameBG.png" mode="scaleToFill" />
 
     <!-- 剧情 -->
-    <view wx:if="{{isPlot}}" class="game">
-        <view class="txt_plot">{{plotText}}</view>
+    <view wx:if="{{isPlot && plotIndex<plotList.length}}" class="game">
+        <view class="txt_plot">{{plotList[plotIndex]}}</view>
         <button class="btn_Continue" bindtap="OnGameContinueClick">继续</button>
+
+        <!-- 按理说该放外面的, 但是subpage的遮罩层次有bug, 移到里面快点 -->
+        <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
     </view>
 
     <!-- 主界面 -->
     <view wx:else class="game">
         <view class="control">
-            <button class="btn_control" bindtap="OnGamePolicyClick">政策</button>
+            <button class="btn_control" bind:tap="OnGamePolicyClick">政策</button>
             <button class="btn_control" bindtap="OnGamePopulationClick">人口</button>
             <button class="btn_control" bindtap="OnGameTradeClick">交易</button>
+        </view>
+
+        <view class="subpage">
+            <subpage show="{{showSubPage==1}}" title="政策" bind:close="OnSubpageCloseClick">
+                <view class="subpage">
+                    <text>政策</text>
+                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                </view>
+            </subpage>
+
+            <subpage show="{{showSubPage==2}}" title="人口" bind:close="OnSubpageCloseClick">
+                <view class="subpage">
+                    <text>人口</text>
+                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                </view>
+            </subpage>
+
+            <subpage show="{{showSubPage==3}}" title="交易" bind:close="OnSubpageCloseClick">
+                <view class="subpage">
+                    <text>交易</text>
+                    <button bindtap="onSubpageSureClick" class="btn_subpage">确认</button>
+                </view>
+            </subpage>
         </view>
 
         <view class="hud">
@@ -20,11 +46,14 @@
             <text class="hud_content_secondary">农民: {{farmer}} + 士兵: {{soldier}}</text>
             <text class="hud_content">儿童: {{child}}</text>
             <text class="hud_content">你: {{player}}</text>
-            <text class="hud_content">------------</text>
+            <text class="hud_content">--------------</text>
             <text class="hud_content">食物: {{food}}</text>
             <text class="hud_content">枪: {{gun}}</text>
         </view>
-    </view>
 
-    <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
+        <text class="day">第{{day}}天</text>
+
+        <button class="btn_back" bindtap="OnGameBackClick">返回主界面</button>
+        <button class="btn_next" bindtap="OnGameNextClick">下一天</button>
+    </view>
 </view>

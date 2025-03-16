@@ -1,0 +1,13 @@
+<view class="mask" wx:if="{{show}}">
+    <view class="container">
+
+        <view class="header">
+            <text class="title">{{title}}</text>
+            <text class="btn_close" bind:tap="OnSubpageCloseClick">x</text>
+        </view>
+
+        <view class="content">
+            <slot></slot> <!-- slot: 插入外部内容 -->
+        </view>
+    </view>
+</view>
